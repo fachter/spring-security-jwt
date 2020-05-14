@@ -3,15 +3,13 @@ package com.security.springsecurityjwt;
 import com.security.springsecurityjwt.models.AuthenticationRequest;
 import com.security.springsecurityjwt.models.AuthenticationResponse;
 import com.security.springsecurityjwt.services.MyUserDetailsService;
-import com.security.springsecurityjwt.util.JwtUltil;
+import com.security.springsecurityjwt.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +25,7 @@ public class HelloResource {
     private MyUserDetailsService userDetailsService;
 
     @Autowired
-    private JwtUltil jwtTokenUtil;
+    private JwtUtil jwtTokenUtil;
 
     @RequestMapping("/hello")
     public String hello() {

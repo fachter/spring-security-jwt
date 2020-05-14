@@ -1,7 +1,7 @@
 package com.security.springsecurityjwt.filters;
 
 import com.security.springsecurityjwt.services.MyUserDetailsService;
-import com.security.springsecurityjwt.util.JwtUltil;
+import com.security.springsecurityjwt.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +23,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private MyUserDetailsService userDetailsService;
 
     @Autowired
-    private JwtUltil jwtUltil;
+    private JwtUtil jwtUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -37,12 +37,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
-            username = jwtUltil.extractUsername(jwt);
+            username = jwtUtil.extractUsername(jwt);
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            if (jwtUltil.validateToken(jwt, userDetails)) {
+            if (jwtUtil.validateToken(jwt, userDetails)) {
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
